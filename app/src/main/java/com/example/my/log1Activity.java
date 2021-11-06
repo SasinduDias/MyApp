@@ -14,7 +14,8 @@ public class log1Activity extends AppCompatActivity {
     EditText et_email,et_password;
     RelativeLayout btn_login;
     TextView tv_sign_up;
-    String email,password;
+    String passwordPattern="[a-zA-Z0-9\\\\!\\\\@\\\\#\\\\$]{8,24}";
+    String emailPattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +34,35 @@ public class log1Activity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String email,password;
                 email=et_email.getText().toString().trim();
                 password=et_password.getText().toString().trim();
-                Toast.makeText(log1Activity.this, "E mail is " + email + "" + "Password is" + password , Toast.LENGTH_SHORT).show();
+//                Toast.makeText(log1Activity.this, "E mail is " + email + "" + "Password is" + password , Toast.LENGTH_SHORT).show();
 
-                if(email.isEmpty()){
-                    et_email.setError("Please fill the field!");
-                }else{
-                    if(password.isEmpty()){
-                        et_password.setError("please fill the field");
-                    }else{
-                        Toast.makeText(log1Activity.this, "ok" , Toast.LENGTH_SHORT).show();
-                    }
-                }
+                validateFielde(email,password);
+
             }
         });
 
+    }
+
+    private void validateFielde(String email, String password) {
+
+        if(!(email.isEmpty()) && !(password.isEmpty())){
+           if(email.matches(emailPattern)){
+               if(password.matches(passwordPattern)){
+                   Toast.makeText(log1Activity.this, "Successful" , Toast.LENGTH_SHORT).show();
+
+               }else{
+                   et_password.setError("Password error");
+               }
+           }else{
+               et_email.setError("Email is incorrect");
+           }
+
+        }else{
+            Toast.makeText(log1Activity.this, "Please fill the fields " , Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
