@@ -70,6 +70,6 @@ public class log1Activity extends AppCompatActivity {
 
     private void LogUser(String email, String password) {
         //firebase,API
-        startActivity(new Intent(log1Activity.this,MainActivity.class));
+        startActivity(new Intent(log1Activity.this,FragmentActivity.class));
     }
 }
