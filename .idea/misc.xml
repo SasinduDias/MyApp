@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Sunday class/My/app/src/main/res/drawable/btn_bg.xml" value="0.24722222222222223" />
+        <entry key="..\:/Sunday class/My/app/src/main/res/layout/activity_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Sunday class/My/app/src/main/res/layout/activity_log1.xml" value="0.25416666666666665" />
+        <entry key="..\:/Sunday class/My/app/src/main/res/layout/fragment_home.xml" value="0.24010416666666667" />
+        <entry key="..\:/Sunday class/My/app/src/main/res/menu/bottom_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

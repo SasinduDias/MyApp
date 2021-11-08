@@ -2,6 +2,7 @@ package com.example.my;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -52,9 +53,10 @@ public class log1Activity extends AppCompatActivity {
            if(email.matches(emailPattern)){
                if(password.matches(passwordPattern)){
                    Toast.makeText(log1Activity.this, "Successful" , Toast.LENGTH_SHORT).show();
+                   LogUser(email,password);
 
                }else{
-                   et_password.setError("Password error");
+                   et_password.setError("Password should have minimum 8 letters");
                }
            }else{
                et_email.setError("Email is incorrect");
@@ -64,5 +66,10 @@ public class log1Activity extends AppCompatActivity {
             Toast.makeText(log1Activity.this, "Please fill the fields " , Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private void LogUser(String email, String password) {
+        //firebase,API
+        startActivity(new Intent(log1Activity.this,MainActivity.class));
     }
 }
