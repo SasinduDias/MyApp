@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.My">
         <activity
-            android:name=".SignUpActivity"
+            android:name=".log1Activity"
             android:exported="true" />
         <activity
             android:name=".ListActivity"
@@ -22,7 +22,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".log1Activity"
+            android:name=".SignUpActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
