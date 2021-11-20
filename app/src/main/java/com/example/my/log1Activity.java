@@ -1,5 +1,6 @@
 package com.example.my;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,12 +12,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class log1Activity extends AppCompatActivity {
     EditText et_email,et_password;
     RelativeLayout btn_login;
     TextView tv_sign_up;
     String passwordPattern="[a-zA-Z0-9\\\\!\\\\@\\\\#\\\\$]{8,24}";
     String emailPattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    FirebaseAuth mAuth;
+    String Uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,8 @@ public class log1Activity extends AppCompatActivity {
         et_password=findViewById(R.id.edt_password);
         btn_login=findViewById(R.id.btn_login);
         tv_sign_up=findViewById(R.id.tv_signup);
+
+        mAuth = FirebaseAuth.getInstance();
 
         String sign_up_text="<font>Don't have an account?</font> <font color=#E26912><b> SIGNUP</b></font>";
         tv_sign_up.setText(Html.fromHtml(sign_up_text));
@@ -52,7 +64,6 @@ public class log1Activity extends AppCompatActivity {
         if(!(email.isEmpty()) && !(password.isEmpty())){
            if(email.matches(emailPattern)){
                if(password.matches(passwordPattern)){
-                   Toast.makeText(log1Activity.this, "Successful" , Toast.LENGTH_SHORT).show();
                    LogUser(email,password);
 
                }else{
@@ -70,6 +81,22 @@ public class log1Activity extends AppCompatActivity {
 
     private void LogUser(String email, String password) {
         //firebase,API
-        startActivity(new Intent(log1Activity.this,FragmentActivity.class));
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(log1Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(log1Activity.this,FragmentActivity.class));
+                }else{
+                    Toast.makeText(log1Activity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(log1Activity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

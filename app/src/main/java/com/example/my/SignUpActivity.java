@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
         et_email=findViewById(R.id.edt_email);
         et_username=findViewById(R.id.edt_user);
         et_contact_no=findViewById(R.id.edt_contact_number);
-        et_password=findViewById(R.id.edt_password);
+        et_password=findViewById(R.id.et_password);
 
         mAuth = FirebaseAuth.getInstance();
 
