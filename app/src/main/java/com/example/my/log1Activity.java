@@ -95,6 +95,7 @@ public class log1Activity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(log1Activity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+                System.out.println("error is =================================" + e);
             }
         });
 

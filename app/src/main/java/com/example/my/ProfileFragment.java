@@ -1,20 +1,27 @@
 package com.example.my;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,7 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 public class ProfileFragment extends Fragment {
     EditText et_name,et_email,et_phone;
-    Button bt_update,bt_logout;
+    RelativeLayout bt_logout,bt_update;
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseFirestore db;
@@ -83,11 +90,22 @@ public class ProfileFragment extends Fragment {
         et_name=view.findViewById(R.id.edt_name);
         et_email=view.findViewById(R.id.edt_email);
         et_phone=view.findViewById(R.id.edt_contact_number);
+        bt_logout=view.findViewById(R.id.btn_logout);
+        bt_update=view.findViewById(R.id.btn_update);
+
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         Uid=mAuth.getCurrentUser().getUid();
         user=mAuth.getCurrentUser();
+
+        bt_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updadeDetails();
+            }
+        });
 
         DocumentReference documentReference=db.collection("USER").document(Uid);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -121,6 +139,74 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void updadeDetails() {
+              //dialog box with input parameter
+        String my_email=et_email.getText().toString();
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        builder.setTitle("Please Authenticate");
+        builder.setMessage("Please enter your password here...");
+        EditText editText=new EditText(getContext());
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(editText);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String password= editText.getText().toString();
+                AuthenticatePassword(my_email,password);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void AuthenticatePassword(String email,String password) {
+        AuthCredential authCredential= EmailAuthProvider.getCredential(email,password);
+        user.reauthenticate(authCredential).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+             updateDatabase();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Your password is wrong!!" , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void updateDatabase() {
+        String sName,sEmail,sPhone;
+        sName=et_name.getText().toString();
+        sEmail=et_email.getText().toString();
+        sPhone=et_phone.getText().toString();
+
+        user.updateEmail(sEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                db.collection("USER").document(Uid).update("USER NAME",sName);
+                db.collection("USER").document(Uid).update("EMAIL",sEmail);
+                db.collection("USER").document(Uid).update("PHONE",sPhone);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
     }
 
     private void setDetails(String name, String email, String phone) {
