@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class log1Activity extends AppCompatActivity {
     EditText et_email,et_password;
     RelativeLayout btn_login;
-    TextView tv_sign_up;
+    TextView tv_sign_up,reset;
     String passwordPattern="[a-zA-Z0-9\\\\!\\\\@\\\\#\\\\$]{8,24}";
     String emailPattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -37,6 +37,7 @@ public class log1Activity extends AppCompatActivity {
         et_password=findViewById(R.id.edt_password);
         btn_login=findViewById(R.id.btn_login);
         tv_sign_up=findViewById(R.id.tv_signup);
+        reset=findViewById(R.id.reset);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -44,6 +45,14 @@ public class log1Activity extends AppCompatActivity {
             startActivity(new Intent(log1Activity.this,FragmentActivity.class));
             finish();
         }
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(log1Activity.this,ResetPasswordActivity.class));
+
+            }
+        });
 
         String sign_up_text="<font>Don't have an account?</font> <font color=#E26912><b> SIGNUP</b></font>";
         tv_sign_up.setText(Html.fromHtml(sign_up_text));

@@ -2,6 +2,7 @@ package com.example.my;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 public class ProfileFragment extends Fragment {
     EditText et_name,et_email,et_phone;
+    TextView reset_password;
     RelativeLayout bt_logout,bt_update;
     FirebaseAuth mAuth;
     FirebaseUser user;
@@ -92,7 +95,7 @@ public class ProfileFragment extends Fragment {
         et_phone=view.findViewById(R.id.edt_contact_number);
         bt_logout=view.findViewById(R.id.btn_logout);
         bt_update=view.findViewById(R.id.btn_update);
-
+        reset_password=view.findViewById(R.id.reset_password);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -105,6 +108,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 mAuth.signOut();
                 getActivity().finish();
+            }
+        });
+
+        reset_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
 

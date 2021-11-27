@@ -46,7 +46,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ResetPasswordActivity.this, "Reset link not sent" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ResetPasswordActivity.this, "This is not a valid Email" , Toast.LENGTH_SHORT).show();
 
                     }
                 });
