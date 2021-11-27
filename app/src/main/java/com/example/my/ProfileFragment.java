@@ -100,6 +100,14 @@ public class ProfileFragment extends Fragment {
         Uid=mAuth.getCurrentUser().getUid();
         user=mAuth.getCurrentUser();
 
+        bt_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                getActivity().finish();
+            }
+        });
+
         bt_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

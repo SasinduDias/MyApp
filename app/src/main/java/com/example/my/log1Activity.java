@@ -40,6 +40,11 @@ public class log1Activity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if(mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(log1Activity.this,FragmentActivity.class));
+            finish();
+        }
+
         String sign_up_text="<font>Don't have an account?</font> <font color=#E26912><b> SIGNUP</b></font>";
         tv_sign_up.setText(Html.fromHtml(sign_up_text));
         
@@ -94,7 +99,7 @@ public class log1Activity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(log1Activity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(log1Activity.this, "Connection Error", Toast.LENGTH_SHORT).show();
                 System.out.println("error is =================================" + e);
             }
         });
