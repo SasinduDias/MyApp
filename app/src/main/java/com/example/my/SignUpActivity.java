@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        String sign_up_text="<font>Already have an account?</font> <font color=#E26912><b>LogIn</b></font>";
+        String sign_up_text="<font>Already have an account?</font> <font color=#E26912><b>SIGN IN</b></font>";
         tv_login.setText(Html.fromHtml(sign_up_text));
 
         
