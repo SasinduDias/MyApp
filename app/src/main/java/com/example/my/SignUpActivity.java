@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -51,8 +52,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        String sign_up_text="<font>Already have an account?</font> <font color=#E26912><b> LogIn</b></font>";
-        tv_login.setText(sign_up_text);
+        String sign_up_text="<font>Already have an account?</font> <font color=#E26912><b>LogIn</b></font>";
+        tv_login.setText(Html.fromHtml(sign_up_text));
+
         
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
