@@ -36,6 +36,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="23dp"
+            android:layout_marginEnd="253dp"
+            android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/ic_baseline_email_24" />
+
         <EditText
             android:id="@+id/edt_email"
             android:layout_width="230dp"
@@ -66,6 +77,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
 
+        <TextView
+            android:layout_width="57dp"
+            android:layout_height="52dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginEnd="222dp"
+            android:layout_marginBottom="5dp"
+            android:drawableStart="@drawable/ic_baseline_account_box_24" />
+
         <EditText
             android:id="@+id/edt_user"
             android:layout_width="228dp"
@@ -90,6 +112,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="23dp"
+            android:layout_marginEnd="253dp"
+            android:layout_marginBottom="17dp"
+            android:drawableStart="@drawable/ic_baseline_local_phone_24" />
 
         <EditText
             android:id="@+id/edt_contact_number"
@@ -120,6 +153,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="23dp"
+            android:layout_marginEnd="253dp"
+            android:layout_marginBottom="17dp"
+            android:drawableStart="@drawable/ic_baseline_lock_24" />
 
         <EditText
             android:id="@+id/et_password"
