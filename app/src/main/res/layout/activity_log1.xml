@@ -16,6 +16,7 @@
         android:gravity="center"
         android:text="TRAVEL SRI LANKA"
         android:textSize="32dp"
+        android:textColor="@color/topbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,13 +27,24 @@
         android:id="@+id/relativeLayout3"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="248dp"
         android:background="@drawable/input"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+        <TextView
+            android:layout_width="43dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginEnd="238dp"
+            android:layout_marginBottom="13dp"
+            android:drawableStart="@drawable/ic_baseline_email_24" />
 
         <EditText
             android:id="@+id/edt_email"
@@ -44,6 +56,7 @@
             android:layout_marginStart="47dp"
             android:layout_marginTop="9dp"
             android:layout_marginEnd="23dp"
+            android:fontFamily="@font/lato_bold"
             android:hint="Email address"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/white"
@@ -51,20 +64,32 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </RelativeLayout>
 
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/input"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
 
+
+        <TextView
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="243dp"
+            android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/ic_baseline_lock_24" />
 
         <EditText
             android:id="@+id/edt_password"
@@ -76,6 +101,7 @@
             android:layout_marginStart="47dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="22dp"
+            android:fontFamily="@font/lato_bold"
             android:hint="Password"
             android:inputType="textPassword"
             android:textColorHint="@color/white" />
@@ -85,14 +111,14 @@
         android:id="@+id/reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lato_bold"
         android:text="Forget Your Password"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="22dp"
-        android:textStyle="bold"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
 
@@ -100,11 +126,11 @@
         android:id="@+id/btn_login"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/btn_bg"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
 
@@ -115,11 +141,11 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="39dp"
             android:layout_marginEnd="44dp"
+            android:fontFamily="@font/lato_bold"
             android:text="Sign in"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            android:textSize="22dp" />
 
     </RelativeLayout>
 
@@ -127,16 +153,16 @@
         android:id="@+id/tv_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/lato_bold"
         android:text="Create new account?SIGN UP"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="22dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
