@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
- TextView tv_login;
+ TextView tv_login,tv_login_screen;
  RelativeLayout bt_signup;
  EditText et_username,et_email,et_contact_no,et_password;
     private FirebaseAuth mAuth;
@@ -47,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
         et_username=findViewById(R.id.edt_user);
         et_contact_no=findViewById(R.id.edt_contact_number);
         et_password=findViewById(R.id.et_password);
+        tv_login_screen=findViewById(R.id.tv_login_screen);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -55,7 +56,16 @@ public class SignUpActivity extends AppCompatActivity {
         String sign_up_text="<font>Already have an account?</font> <font color=#E26912><b>SIGN IN</b></font>";
         tv_login.setText(Html.fromHtml(sign_up_text));
 
-        
+//        go to the login page
+        tv_login_screen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUpActivity.this, log1Activity.class));
+                finish();
+
+            }
+        });
+
         bt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

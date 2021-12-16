@@ -56,8 +56,17 @@ public class log1Activity extends AppCompatActivity {
 
         String sign_up_text="<font>Don't have an account?</font> <font color=#E26912><b> SIGNUP</b></font>";
         tv_sign_up.setText(Html.fromHtml(sign_up_text));
-        
-        
+
+        tv_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(log1Activity.this, SignUpActivity.class));
+                finish();
+
+            }
+        });
+
+
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
