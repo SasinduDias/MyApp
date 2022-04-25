@@ -1,16 +1,26 @@
 package com.example.my;
 
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
+    private ArrayList<ModelClass> userList;
+
+    public AdapterClass(ArrayList<ModelClass> userList) {
+        this.userList = userList;
+    }
 
     @NonNull
     @Override
     public AdapterClass.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_template,parent);
+        return new ViewHolder(view);
     }
 
     @Override
