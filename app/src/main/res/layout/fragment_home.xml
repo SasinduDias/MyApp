@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My List"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:textSize="25dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="this is home " />
+        android:layout_marginTop="85dp"/>
 
 </FrameLayout>
