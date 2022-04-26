@@ -3,6 +3,8 @@ package com.example.my;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +35,14 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
         return 0;
     }
 
-    public class ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_name,tv_details;
+        ImageView img_user;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv_name=itemView.findViewById(R.id.textView);
+            tv_details=itemView.findViewById(R.id.textView2);
+            img_user=itemView.findViewById(R.id.imageView);
+        }
     }
 }
