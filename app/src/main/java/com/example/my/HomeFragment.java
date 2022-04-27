@@ -86,9 +86,9 @@ public class HomeFragment extends Fragment {
         //get data from database
 
         modelClasses=new ArrayList<>();
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu","dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu2","dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu3","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu","dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu2","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu3","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv"));
         modelClasses.add(new ModelClass(R.drawable.beach,"sasindu4","dertgjhgh jhgjgjhghjg"));
         modelClasses.add(new ModelClass(R.drawable.beach,"sasindu5","dertgjhgh jhgjgjhghjg"));
         modelClasses.add(new ModelClass(R.drawable.beach,"sasindu6","dertgjhgh jhgjgjhghjg"));
