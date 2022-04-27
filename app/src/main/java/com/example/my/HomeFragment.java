@@ -3,10 +3,14 @@ package com.example.my;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +19,9 @@ import android.view.ViewGroup;
  */
 public class HomeFragment extends Fragment {
 
+    RecyclerView rv_lists;
+    AdapterClass adapterClass;
+    ArrayList<ModelClass> modelClasses;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +66,31 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view= inflater.inflate(R.layout.fragment_home, container, false);
+
+        rv_lists=view.findViewById(R.id.rv_list);
+        
+        initData();
+        setAdapter();
+        return view;
+    }
+
+    private void setAdapter() {
+
+        rv_lists.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        adapterClass =new AdapterClass(modelClasses);
+        rv_lists.setAdapter(adapterClass);
+    }
+
+    private void initData() {
+        //get data from database
+
+        modelClasses=new ArrayList<>();
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu2","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu3","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu4","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu5","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu6","dertgjhgh jhgjgjhghjg"));
     }
 }

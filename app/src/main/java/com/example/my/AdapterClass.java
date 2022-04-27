@@ -21,23 +21,32 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.ViewHolder>{
     @NonNull
     @Override
     public AdapterClass.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_template,parent);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_template,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdapterClass.ViewHolder holder, int position) {
+      String name,details;
+      int photo;
+      name=userList.get(position).getName();
+      details=userList.get(position).getDetails();
+      photo=userList.get(position).getPhoto();
+
+      holder.tv_name.setText(name);
+      holder.tv_details.setText(details);
+      holder.img_user.setImageResource(photo);
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return userList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_name,tv_details;
-        ImageView img_user;
+       private TextView tv_name,tv_details;
+       private ImageView img_user;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_name=itemView.findViewById(R.id.textView);
