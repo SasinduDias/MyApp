@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.RecyclerViewClickListener{
 
     RecyclerView rv_lists;
     AdapterClass adapterClass;
@@ -78,7 +79,7 @@ public class HomeFragment extends Fragment {
     private void setAdapter() {
 
         rv_lists.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        adapterClass =new AdapterClass(modelClasses);
+        adapterClass =new AdapterClass(modelClasses,HomeFragment.this::onClickListner);
         rv_lists.setAdapter(adapterClass);
     }
 
@@ -86,11 +87,18 @@ public class HomeFragment extends Fragment {
         //get data from database
 
         modelClasses=new ArrayList<>();
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu","dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu2","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu3","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"Isuru","dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.sigiriya,"Lahiru","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.galle,"Thisara","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv"));
         modelClasses.add(new ModelClass(R.drawable.beach,"sasindu4","dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu5","dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu6","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"Yasiru","dertgjhgh jhgjgjhghjg"));
+        modelClasses.add(new ModelClass(R.drawable.beach,"Nishedha","dertgjhgh jhgjgjhghjg"));
+    }
+
+    @Override
+    public void onClickListner(int position) {
+        String name=modelClasses.get(position).getName();
+        Toast.makeText(getContext(), "Hello!!"+name , Toast.LENGTH_SHORT).show();
+
     }
 }
