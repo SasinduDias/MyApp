@@ -117,14 +117,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void saveUser(String user_name, String email, String phone, String password) {
        //firebase code
-        snackbar = Snackbar.make(constraintLayout,"Sign in please wait",Snackbar.LENGTH_LONG).setAction("Dismiss", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.setActionTextColor(Color.CYAN);
-        snackbar.show();
+//        snackbar = Snackbar.make(constraintLayout,"Sign in please wait",Snackbar.LENGTH_LONG).setAction("Dismiss", new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                snackbar.dismiss();
+//            }
+//        });
+//        snackbar.setActionTextColor(Color.CYAN);
+//        snackbar.show();
 
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ResetPasswordActivity extends AppCompatActivity {
     EditText et_email;
-    RelativeLayout btn_send;
+    RelativeLayout btn_send,btn_resend;
     FirebaseAuth mAuth;
 
     @Override
@@ -26,7 +26,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         et_email=findViewById(R.id.edt_resetPassword);
         btn_send=findViewById(R.id.btn_send);
-
+        btn_resend=findViewById(R.id.btn_resend);
         mAuth = FirebaseAuth.getInstance();
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +63,47 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //resend
+
+
+        btn_resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email=et_email.getText().toString();
+                if(email.isEmpty()){
+                    et_email.setError("please enter your e-mail...");
+                }else{
+
+
+                    mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(ResetPasswordActivity.this, "Reset link sent" , Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(ResetPasswordActivity.this, "Reset link not sent" , Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ResetPasswordActivity.this, "This is not a valid Email" , Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+
+
+                }
+
+
+            }
+        });
+
+
 
     }
 }
