@@ -33,23 +33,34 @@ public class ResetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email=et_email.getText().toString();
-                mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                           if(task.isSuccessful()){
-                               Toast.makeText(ResetPasswordActivity.this, "Reset link sent" , Toast.LENGTH_SHORT).show();
-                           }else {
-                               Toast.makeText(ResetPasswordActivity.this, "Reset link not sent" , Toast.LENGTH_SHORT).show();
+                if(email.isEmpty()){
+                  et_email.setError("please enter your e-mail...");
+                }else{
 
-                           }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ResetPasswordActivity.this, "This is not a valid Email" , Toast.LENGTH_SHORT).show();
 
-                    }
-                });
+                    mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(ResetPasswordActivity.this, "Reset link sent" , Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(ResetPasswordActivity.this, "Reset link not sent" , Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ResetPasswordActivity.this, "This is not a valid Email" , Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+
+
+                }
+
+
             }
         });
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,6 +30,8 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
  TextView tv_login,tv_login_screen;
  RelativeLayout bt_signup;
+ Snackbar snackbar;
+ ConstraintLayout constraintLayout;
  EditText et_username,et_email,et_contact_no,et_password;
     private FirebaseAuth mAuth;
     String UserId;
@@ -113,6 +117,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void saveUser(String user_name, String email, String phone, String password) {
        //firebase code
+        snackbar = Snackbar.make(constraintLayout,"Sign in please wait",Snackbar.LENGTH_LONG).setAction("Dismiss", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.setActionTextColor(Color.CYAN);
+        snackbar.show();
+
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
