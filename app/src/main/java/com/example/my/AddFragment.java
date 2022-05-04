@@ -1,11 +1,13 @@
 package com.example.my;
 
 import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -17,6 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,8 +71,29 @@ public class AddFragment extends Fragment {
         if(requestCode != RESULT_CANCELED){
             switch (requestCode){
                 case 0:
-                    image_file=(Bitmap) data.getExtras().get("data");
-                    img_post.setImageBitmap(image_file);
+                    if(requestCode == RESULT_OK && data != null){
+                        image_file=(Bitmap) data.getExtras().get("data");
+                        img_post.setImageBitmap(image_file);
+                    }else {
+                        Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT).show();
+
+                    }
+                    break;
+                case 1:
+                    if(requestCode == RESULT_OK && data != null){
+                        Uri path=data.getData();
+                        try {
+                            image_file=MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),path);
+                            img_post.setImageBitmap(image_file);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }else {
+                        Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT).show();
+
+                    }
+                    break;
             }
 
         }
@@ -104,13 +130,16 @@ public class AddFragment extends Fragment {
                                 //cam
                                 Intent takePicture=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 startActivityForResult(takePicture,0);
+                                break;
                             case 1:
                                 //gallery
                                 Intent pickPicture=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                 startActivityForResult(pickPicture,1);
+                                break;
                             case 2:
                                 //cancel
                                 dialog.dismiss();
+                                break;
                         }
                     }
                 });
