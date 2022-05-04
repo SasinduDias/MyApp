@@ -1,12 +1,17 @@
 package com.example.my;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +19,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class AddFragment extends Fragment {
+    TextView tv_add;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +65,38 @@ public class AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add, container, false);
+        View view= inflater.inflate(R.layout.fragment_add, container, false);
+
+        tv_add=view.findViewById(R.id.tv_add);
+        tv_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               final CharSequence[] option={"Take Photo","From Gallery","Cancel"};
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setTitle("Select your option");
+                builder.setItems(option, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                //cam
+                                Intent takePicture=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(takePicture,0);
+                            case 1:
+                                //gallery
+                                Intent pickPicture=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(pickPicture,1);
+                            case 2:
+                                //cancel
+                                dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+
+
+        return view;
     }
 }
