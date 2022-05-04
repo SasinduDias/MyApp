@@ -1,16 +1,21 @@
 package com.example.my;
 
+import static android.app.Activity.RESULT_CANCELED;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -20,6 +25,9 @@ import android.widget.TextView;
  */
 public class AddFragment extends Fragment {
     TextView tv_add;
+    ImageView img_post;
+
+    Bitmap image_file;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +61,19 @@ public class AddFragment extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode != RESULT_CANCELED){
+            switch (requestCode){
+                case 0:
+                    image_file=(Bitmap) data.getExtras().get("data");
+                    img_post.setImageBitmap(image_file);
+            }
+
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -68,6 +89,7 @@ public class AddFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_add, container, false);
 
         tv_add=view.findViewById(R.id.tv_add);
+        img_post=view.findViewById(R.id.img_post);
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
