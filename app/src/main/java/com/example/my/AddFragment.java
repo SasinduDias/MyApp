@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -17,11 +18,24 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,9 +44,14 @@ import java.io.IOException;
  */
 public class AddFragment extends Fragment {
     TextView tv_add;
+    EditText et_description;
     ImageView img_post;
-
+    String Uid;
+    Button btn_upload;
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
     Bitmap image_file;
+    StorageReference storageReference;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +93,7 @@ public class AddFragment extends Fragment {
                     if(resultCode == RESULT_OK && data != null){
                         image_file=(Bitmap) data.getExtras().get("data");
                         img_post.setImageBitmap(image_file);
+
                     }else {
                         Toast.makeText(getContext(), "Error occurred", Toast.LENGTH_SHORT).show();
 
@@ -85,6 +105,7 @@ public class AddFragment extends Fragment {
                         try {
                             image_file=MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),path);
                             img_post.setImageBitmap(image_file);
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -98,6 +119,7 @@ public class AddFragment extends Fragment {
 
         }
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,6 +138,37 @@ public class AddFragment extends Fragment {
 
         tv_add=view.findViewById(R.id.tv_add);
         img_post=view.findViewById(R.id.img_post);
+        btn_upload=view.findViewById(R.id.btn_upload);
+        et_description=view.findViewById(R.id.description);
+
+        mAuth=FirebaseAuth.getInstance();
+        db=FirebaseFirestore.getInstance();
+        storageReference= FirebaseStorage.getInstance().getReference();
+        Uid=mAuth.getUid();
+
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              String description=et_description.getText().toString();
+              String id= db.collection("post").document().getId();
+                DocumentReference documentReference=db.collection("post").document(id);
+                Map<String,Object> post= new HashMap<>();
+                post.put("UserId",Uid);
+                post.put("PostDescription",description);
+                documentReference.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                      uploadImage(image_file,id);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        });
+
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,5 +202,12 @@ public class AddFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void uploadImage(Bitmap image_file, String id) {
+        // bitmap to bytearray
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        image_file.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+        byte[] byteArray=byteArrayOutputStream.toByteArray();
     }
 }
