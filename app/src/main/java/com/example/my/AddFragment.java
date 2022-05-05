@@ -68,10 +68,10 @@ public class AddFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode != RESULT_CANCELED){
+        if(resultCode != RESULT_CANCELED){
             switch (requestCode){
                 case 0:
-                    if(requestCode == RESULT_OK && data != null){
+                    if(resultCode == RESULT_OK && data != null){
                         image_file=(Bitmap) data.getExtras().get("data");
                         img_post.setImageBitmap(image_file);
                     }else {
@@ -80,7 +80,7 @@ public class AddFragment extends Fragment {
                     }
                     break;
                 case 1:
-                    if(requestCode == RESULT_OK && data != null){
+                    if(resultCode == RESULT_OK && data != null){
                         Uri path=data.getData();
                         try {
                             image_file=MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),path);
