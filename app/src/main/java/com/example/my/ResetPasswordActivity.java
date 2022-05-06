@@ -18,6 +18,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     EditText et_email;
     RelativeLayout btn_send,btn_resend;
     FirebaseAuth mAuth;
+    String emailPattern="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,30 +36,36 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 String email=et_email.getText().toString();
                 if(email.isEmpty()){
                   et_email.setError("please enter your e-mail...");
-                }else{
+                }
+                else{
+                    if(!(email.matches(emailPattern))){
+                        et_email.setError("please enter valid email..");
+                    }else{
 
 
-                    mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(ResetPasswordActivity.this, "Reset link sent" , Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(ResetPasswordActivity.this, "Reset link not sent" , Toast.LENGTH_SHORT).show();
+                        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(ResetPasswordActivity.this, "Reset link sent" , Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(ResetPasswordActivity.this, "Reset link not sent" , Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ResetPasswordActivity.this, "This is not a valid Email" , Toast.LENGTH_SHORT).show();
 
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ResetPasswordActivity.this, "This is not a valid Email" , Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
+                        });
 
 
 
-                }
+
+                    }
+                    }
 
 
             }

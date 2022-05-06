@@ -28,8 +28,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/user"
+        <EditText
+            android:id="@+id/et_name"
             style="@style/unselect"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
