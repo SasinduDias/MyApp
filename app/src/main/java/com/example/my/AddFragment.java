@@ -7,11 +7,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,6 +58,8 @@ public class AddFragment extends Fragment {
     Bitmap image_file;
     StorageReference storageReference;
     UploadTask uploadTask;
+    Snackbar snackbar;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -207,13 +212,25 @@ public class AddFragment extends Fragment {
     }
 
     private void uploadImage(Bitmap image_file, String id) {
+        snackbar = Snackbar.make(getView(),"Post Uploaded please wait",Snackbar.LENGTH_LONG).setAction("Dismiss", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.setActionTextColor(Color.CYAN);
+        snackbar.show();
+
+
         // bitmap to bytearray
+
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
         image_file.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
         byte[] byteArray=byteArrayOutputStream.toByteArray();
         storageReference= FirebaseStorage.getInstance().getReference().child("post_image/"+ id);
 
         uploadTask=storageReference.putBytes(byteArray);
+
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
