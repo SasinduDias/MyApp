@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -47,11 +49,12 @@ public class AddFragment extends Fragment {
     EditText et_description;
     ImageView img_post;
     String Uid;
-    Button btn_upload;
+    RelativeLayout btn_upload;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     Bitmap image_file;
     StorageReference storageReference;
+    UploadTask uploadTask;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -143,7 +146,6 @@ public class AddFragment extends Fragment {
 
         mAuth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
-        storageReference= FirebaseStorage.getInstance().getReference();
         Uid=mAuth.getUid();
 
         btn_upload.setOnClickListener(new View.OnClickListener() {
@@ -209,5 +211,20 @@ public class AddFragment extends Fragment {
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
         image_file.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
         byte[] byteArray=byteArrayOutputStream.toByteArray();
+        storageReference= FirebaseStorage.getInstance().getReference().child("post_image/"+ id);
+
+        uploadTask=storageReference.putBytes(byteArray);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+               getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment,new HomeFragment()).commit();
+                Toast.makeText(getContext(), "Saved successfully", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Post not uploaded", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
