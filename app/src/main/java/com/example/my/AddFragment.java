@@ -52,8 +52,8 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class AddFragment extends Fragment {
-    TextView tv_add;
-    EditText et_description,et_name;
+    TextView tv_add,et_name;
+    EditText et_description;
     ImageView img_post;
     String Uid;
     RelativeLayout btn_upload;
@@ -154,7 +154,7 @@ public class AddFragment extends Fragment {
         btn_upload=view.findViewById(R.id.btn_upload);
         et_description=view.findViewById(R.id.description);
         et_name=view.findViewById(R.id.et_name);
-
+        et_name.setEnabled(false);
         mAuth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
         Uid=mAuth.getCurrentUser().getUid();
