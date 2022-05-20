@@ -2,6 +2,7 @@ package com.example.my;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -23,6 +33,9 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
     RecyclerView rv_lists;
     AdapterClass adapterClass;
     ArrayList<ModelClass> modelClasses;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    FirebaseFirestore db;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,10 +82,12 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_home, container, false);
 
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         rv_lists=view.findViewById(R.id.rv_list);
-        
+        modelClasses = new ArrayList<>();
         initData();
-        setAdapter();
+//        setAdapter();
         return view;
     }
 
@@ -87,12 +102,47 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
         //get data from database
 
         modelClasses=new ArrayList<>();
-        modelClasses.add(new ModelClass(R.drawable.beach,"Isuru","dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.sigiriya,"Lahiru","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.galle,"Thisara","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu4","dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"Yasiru","dertgjhgh jhgjgjhghjg"));
-        modelClasses.add(new ModelClass(R.drawable.beach,"Nishedha","dertgjhgh jhgjgjhghjg"));
+
+        db.collection("post").whereEqualTo("UID",mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
+                if (task.isSuccessful()){
+
+                    for (QueryDocumentSnapshot documentSnapshot:task.getResult()){
+                        String sListID = documentSnapshot.getData().get("PostDescription").toString();
+//                        int listID = Integer.valueOf(sListID);
+                        String userID = documentSnapshot.getData().get("UserId").toString();
+
+
+                        modelClasses.add(new ModelClass(photo,sListID,userID));
+                        setAdapter();
+                    }
+                }else {
+                    Toast.makeText(getContext(),"No Data!",Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(),"Error Occurred!!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+
+//        modelClasses.add(new ModelClass(R.drawable.beach,"Isuru","dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv dertgjhgh jhgjgjhghjg"));
+//        modelClasses.add(new ModelClass(R.drawable.sigiriya,"Lahiru","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjg"));
+//        modelClasses.add(new ModelClass(R.drawable.galle,"Thisara","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv"));
+//        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu4","dertgjhgh jhgjgjhghjg"));
+//        modelClasses.add(new ModelClass(R.drawable.beach,"Yasiru","dertgjhgh jhgjgjhghjg"));
+//        modelClasses.add(new ModelClass(R.drawable.beach,"Nishedha","dertgjhgh jhgjgjhghjg"));
     }
 
     @Override

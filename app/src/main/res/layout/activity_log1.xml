@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".log1Activity"
-    android:background="@drawable/bk">
+    android:background="@drawable/dark">
 
     <TextView
         android:id="@+id/textView12"

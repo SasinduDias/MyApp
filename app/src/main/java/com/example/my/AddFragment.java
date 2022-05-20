@@ -155,6 +155,8 @@ public class AddFragment extends Fragment {
         et_description=view.findViewById(R.id.description);
         et_name=view.findViewById(R.id.et_name);
         et_name.setEnabled(false);
+        et_name.setPaintFlags(View.INVISIBLE);
+
         mAuth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
         Uid=mAuth.getCurrentUser().getUid();
