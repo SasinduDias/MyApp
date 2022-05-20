@@ -17,9 +17,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
     FirebaseAuth mAuth;
     FirebaseUser user;
     FirebaseFirestore db;
+    StorageReference storageReference;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -102,8 +105,10 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
         //get data from database
 
         modelClasses=new ArrayList<>();
+//        String id= db.collection("post").document().getId();
+//        DocumentReference documentReference=db.collection("post").document(id);
 
-        db.collection("post").whereEqualTo("UID",mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("post").whereEqualTo("UserId",mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
@@ -116,7 +121,7 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
                         String userID = documentSnapshot.getData().get("UserId").toString();
 
 
-                        modelClasses.add(new ModelClass(photo,sListID,userID));
+                        modelClasses.add(new ModelClass(R.drawable.galle,userID,sListID));
                         setAdapter();
                     }
                 }else {
