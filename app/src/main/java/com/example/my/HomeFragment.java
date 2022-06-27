@@ -103,9 +103,10 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
                 if (task.isSuccessful()){
                     modelClasses = new ArrayList<>();
                     for (QueryDocumentSnapshot documentSnapshot:task.getResult()){
+                        String name= documentSnapshot.getData().get("Name").toString();
                         String PostDescription= documentSnapshot.getData().get("PostDescription").toString();
-                        String UserId= documentSnapshot.getData().get("UserId").toString();
-                        modelClasses.add(new ModelClass(R.drawable.galle,PostDescription,UserId));
+
+                        modelClasses.add(new ModelClass(R.drawable.galle,PostDescription,name));
 
                     }
                     adapterClass =new AdapterClass(modelClasses,HomeFragment.this::onClickListner);
