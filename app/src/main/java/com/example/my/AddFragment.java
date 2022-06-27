@@ -153,6 +153,7 @@ public class AddFragment extends Fragment {
         img_post=view.findViewById(R.id.img_post);
         btn_upload=view.findViewById(R.id.btn_upload);
         et_description=view.findViewById(R.id.description);
+
         et_name=view.findViewById(R.id.et_name);
         et_name.setEnabled(false);
         et_name.setPaintFlags(View.INVISIBLE);
@@ -193,9 +194,11 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
               String description=et_description.getText().toString();
+              String name=et_name.getText().toString();
               String id= db.collection("post").document().getId();
                 DocumentReference documentReference=db.collection("post").document(id);
                 Map<String,Object> post= new HashMap<>();
+                post.put("Name",name);
                 post.put("UserId",Uid);
                 post.put("PostDescription",description);
                 documentReference.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {

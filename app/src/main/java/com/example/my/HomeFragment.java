@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -89,66 +90,80 @@ public class HomeFragment extends Fragment implements AdapterClass.ViewHolder.Re
         mAuth = FirebaseAuth.getInstance();
         rv_lists=view.findViewById(R.id.rv_list);
         modelClasses = new ArrayList<>();
-        initData();
+//        initData();
+        LoadDataFromFirebase();
 //        setAdapter();
         return view;
     }
 
-    private void setAdapter() {
-
-        rv_lists.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        adapterClass =new AdapterClass(modelClasses,HomeFragment.this::onClickListner);
-        rv_lists.setAdapter(adapterClass);
-    }
-
-    private void initData() {
-        //get data from database
-
-        modelClasses=new ArrayList<>();
-//        String id= db.collection("post").document().getId();
-//        DocumentReference documentReference=db.collection("post").document(id);
-
-        db.collection("post").whereEqualTo("UserId",mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-
+    private void LoadDataFromFirebase() {
+     db.collection("post").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+         @Override
+         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
-
+                    modelClasses = new ArrayList<>();
                     for (QueryDocumentSnapshot documentSnapshot:task.getResult()){
-                        String sListID = documentSnapshot.getData().get("PostDescription").toString();
-//                        int listID = Integer.valueOf(sListID);
-                        String userID = documentSnapshot.getData().get("UserId").toString();
+                        String PostDescription= documentSnapshot.getData().get("PostDescription").toString();
+                        String UserId= documentSnapshot.getData().get("UserId").toString();
+                        modelClasses.add(new ModelClass(R.drawable.galle,PostDescription,UserId));
 
-
-                        modelClasses.add(new ModelClass(R.drawable.galle,userID,sListID));
-                        setAdapter();
                     }
-                }else {
-                    Toast.makeText(getContext(),"No Data!",Toast.LENGTH_SHORT).show();
+                    adapterClass =new AdapterClass(modelClasses,HomeFragment.this::onClickListner);
+                    rv_lists.setAdapter(adapterClass);
+                    rv_lists.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
                 }
+         }
+     }).addOnFailureListener(new OnFailureListener() {
+         @Override
+         public void onFailure(@NonNull Exception e) {
 
+         }
+     });
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(),"Error Occurred!!",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
-
-
-//        modelClasses.add(new ModelClass(R.drawable.beach,"Isuru","dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv dertgjhgh jhgjgjhghjg"));
-//        modelClasses.add(new ModelClass(R.drawable.sigiriya,"Lahiru","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjg"));
-//        modelClasses.add(new ModelClass(R.drawable.galle,"Thisara","dertgjhgh jhgjgjhghjg dertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgdertgjhgh jhgjgjhghjgv"));
-//        modelClasses.add(new ModelClass(R.drawable.beach,"sasindu4","dertgjhgh jhgjgjhghjg"));
-//        modelClasses.add(new ModelClass(R.drawable.beach,"Yasiru","dertgjhgh jhgjgjhghjg"));
-//        modelClasses.add(new ModelClass(R.drawable.beach,"Nishedha","dertgjhgh jhgjgjhghjg"));
     }
+
+//    private void setAdapter() {
+//
+//        rv_lists.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+//        adapterClass =new AdapterClass(modelClasses,HomeFragment.this::onClickListner);
+//        rv_lists.setAdapter(adapterClass);
+//    }
+
+//    private void initData() {
+//        //get data from database
+//
+//        modelClasses=new ArrayList<>();
+//
+//        db.collection("post").whereEqualTo("UserId",mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//
+//                if (task.isSuccessful()){
+//
+//                    for (QueryDocumentSnapshot documentSnapshot:task.getResult()){
+//                        String sListID = documentSnapshot.getData().get("PostDescription").toString();
+////                        int listID = Integer.valueOf(sListID);
+//                        String userID = documentSnapshot.getData().get("UserId").toString();
+//
+//
+//                        modelClasses.add(new ModelClass(R.drawable.galle,userID,sListID));
+//                        setAdapter();
+//                    }
+//                }else {
+//                    Toast.makeText(getContext(),"No Data!",Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(getContext(),"Error Occurred!!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
 
     @Override
     public void onClickListner(int position) {
